@@ -1,7 +1,8 @@
 body
 {
 	margin			: 0;
-	background		: #000 url("/clients_files/views/pictures/b.jpg");
+	/*background		: #000 url("/clients_files/views/pictures/b.jpg");*/
+    background      : #000 url("/clients_files/views/pictures/d.png");
 	background-size		: cover;
 	background-repeat	: no-repeat;
 }
@@ -35,22 +36,23 @@ body
   	animation-duration: 1.3s;
 	z-index         : -10; 
 }
-
-.submit-box1
+.submit-box2
 {
 	font-family     : 'Poiret One', cursive;
     font-weight     : bold;
     color           : gray;
-    font-size       : 30px;
+    font-size       : 20px;
     position		: absolute;
-	left			: 28%;
-	top				: 45%;
+	left			: 20%;
+	top				: 5%;
 
-    padding         : 10px;
+   /* padding         : 10px;
     text-align      : center;
-	margin			: 0 100px 100px 150px;
+    text-decoration-color: black;
+	margin			: 0 100px 100px 150px;*/
 	z-index         : 10; 
 }
+/*
 .submit-box2
 {
 	font-family     : 'Poiret One', cursive;
@@ -65,4 +67,4 @@ body
     text-align      : center;
 	margin			: 0 100px 100px 150px;
 	z-index         : 10; 
-}
+}*/

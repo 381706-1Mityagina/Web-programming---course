@@ -3,7 +3,39 @@
 <head>
 	<title> Login In </title>
 	<meta Content-Type="text/html" charset="UTF-8">
-	<link rel="stylesheet" type="text/CSS" href="index.css">
+	<link rel="stylesheet" type="text/CSS" href="css/index.css">
+
+	<script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+
+            function SingIn() {
+
+            // Get the containers
+            // nameField = document.getElementsByName('name')[0];
+            // descField = document.getElementsByName('desc')[0];
+            // direcField = document.getElementsByName('directions')[0];
+
+            // if (nameField.value.length <= 0)
+            //     return;
+
+            // query = {
+            //     'name' : nameField.value,
+            //     'desc' : descField.value,
+            //     'directions' : direcField.value
+            // };
+
+            // nameField.value = "";
+            // descField.value = "";
+            // direcField.value = "";
+
+            socket.emit('sing_in');
+
+            // console.log('Recipe sent');
+
+        };
+
+    </script>
 </head>
 <body>
 
@@ -30,8 +62,14 @@
 				<input type="password" id="User_Input_Password" class="form-textbox">
 			</div>
 		</div>
-		<!-- <button type="submit" id="submit1" class="submit-box">Register</button> -->
-		<button type="submit" id="submit2" class="submit-box">Log in</button>
+
+		<div class="form-checkbox">
+		<label id="checkbox">
+			<input type="checkbox">Remember Me
+		</label>
+		</div>
+		<button type="submit" id="submit1" class="submit-box">Register</button>
+		<button type="submit" id="submit2" class="submit-box" onclick="SingIn()">Log in</button>
 	</div>
 </div>
 </body>

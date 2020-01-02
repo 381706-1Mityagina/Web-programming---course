@@ -13,12 +13,13 @@ var HttpProtocol = function() {
 var client = new HttpProtocol();
 var currentTemplate = {};
 
-client.get('/templates', function(res) {
+client.get('/templates', function(res){
 
 	var loc = JSON.parse(res);
 	var condition = loc.files.length!=0;
 	var bl = document.querySelector('.choose');
 	initButtons(loc.files);
+
 });
 
 function initButtons(files){
@@ -30,7 +31,7 @@ function initButtons(files){
 	parent.appendChild(ul);
 	files.forEach(insertIntoUL);
 
-	function insertIntoUL(el, index, arr){
+	function insertIntoUL(el,index,arr){
 		var li = document.createElement('li');
 		li.setAttribute('class','templ-name');
 		li.setAttribute('data-id',files[index]);
@@ -50,8 +51,8 @@ function initButtons(files){
 	}
 }
 
-function initForm(parent, fileName){
-	client.get('/raw/'+ fileName, function(res){
+function initForm(parent, fileName) {
+	client.get('/raw/'+fileName, function(res) {
 		parent.innerHTML = '';
 		var inputCounter = 1;
 		var jsonString = res;
@@ -70,16 +71,17 @@ function initForm(parent, fileName){
 		form.setAttribute('action','/database');
 		parent.appendChild(form);
 
-		var fieldset_daddy = document.createElement('fieldset'),
-			legend_daddy = document.createElement('legend');
-		legend_daddy.innerText = obj.name;
+		// <fieldset> используется для группировки нескольких элементов управления без веб-форм.
+		var fieldset_parent = document.createElement('fieldset'),
+			legend_parent = document.createElement('legend');
+		legend_parent.innerText = obj.name;
 
-		form.appendChild(fieldset_daddy);
-		fieldset_daddy.appendChild(legend_daddy);
+		form.appendChild(fieldset_parent);
+		fieldset_parent.appendChild(legend_parent);
 
 		var label = document.createElement('label');
-		label.setAttribute('for','input-' + inputCounter);
-		label.innerText = str + ':';
+		label.setAttribute('for','input-'+inputCounter);
+		label.innerText = str+':';
 
 		var input = document.createElement('input');
 		input.setAttribute('type','text');
@@ -88,8 +90,8 @@ function initForm(parent, fileName){
 		input.setAttribute('required','required');
 		inputCounter++;
 
-		fieldset_daddy.appendChild(label);
-		fieldset_daddy.appendChild(input);
+		fieldset_parent.appendChild(label);
+		fieldset_parent.appendChild(input);
 
 		for (var i = 0; i < resources.length; i++) {
 			var current_res = resources[i];
@@ -97,13 +99,13 @@ function initForm(parent, fileName){
 			var fieldset_child = document.createElement('fieldset');
 			var legend_child = document.createElement('legend');
 			legend_child.innerText = current_res.name;
-			fieldset_daddy.appendChild(fieldset_child);
+			fieldset_parent.appendChild(fieldset_child);
 			fieldset_child.appendChild(legend_child);
 
 			for (var j = 1; j < current_keys.length; j++) {
 				var label = document.createElement('label');
-				label.setAttribute('for','input-' + inputCounter);
-				label.innerText = current_keys[j] + ':';
+				label.setAttribute('for','input-'+inputCounter);
+				label.innerText = current_keys[j]+':';
 
 				var input = document.createElement('input');
 				input.setAttribute('type','text');

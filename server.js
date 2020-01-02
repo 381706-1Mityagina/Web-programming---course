@@ -5,23 +5,18 @@ var path = require('path');
 var MongoClient = require('mongodb').MongoClient;
 var mongoClient = new MongoClient("mongodb://localhost:27017/", { useNewUrlParser: true });
 var db;
-
-var jsonPath = path.join(__dirname, '.', 'public', 'clients_files', 'json', 'views');
+var jsonPath = path.join(__dirname, '.', 'public', 'clients_files', 'json'); // прописываем подключаемые папки
 var charset = 'utf8';
-
 var server = express();
-
 server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json());
 server.use('/', express.static(__dirname + '/public'));
 
+// принимает имя json файла
 server.get('/templates', function(req, res){
-
     var jsonString = fs.readdirSync(jsonPath, charset);
     return res.json({'files': jsonString});
-
 });
-
 server.get('/raw/:name', function(req, res){
 
     var file = jsonPath+'/'+req.params.name;
@@ -36,14 +31,7 @@ server.get('/raw/:name', function(req, res){
     }
 });
 
-server.get('/input_data', function(req, res){
-    res.render('public/clients_files/views/input.html');
-});
-
-server.post('/input_data', function(req, res) {
-    res.render('public/clients_files/views/input.html');
-});
-
+// принимает запрос на показ database
 server.get('/database', function(req, res){
     var options = {
         projection: {
@@ -51,14 +39,13 @@ server.get('/database', function(req, res){
         }
     }
     var cursor = db.collection('info').find({}, options);
-    cursor.toArray(function(err, docs){
+    cursor.toArray(function(err, docs) {
         if(err) {
             console.log(err);
             return res.sendStatus(500);
         }
         res.send(docs);
     });
-
 });
 
 server.post('/database', function(req, res) {
@@ -70,33 +57,26 @@ server.post('/database', function(req, res) {
     json_templ[keys[1]] = `${req.body[keys[1]]}`;
 
     for (var i = 0; i < json_templ[keys[2]].length; i++) {
-
         var current_obj = json_templ[keys[2]][i];
         var current_keys = Object.keys(current_obj);
-
         for (var j = 1; j < current_keys.length; j++) {
             current_obj[current_keys[j]] = `${req.body[current_keys[j]]}`;
         }
     }
-
     var request_data = {
         data:json_templ
     };
-
     db.collection('info').insertOne(request_data, function(err, result){
-        res.send('Данные формы занесены в БД');
+        res.send('Данные успешно занесены в базу данных :)');
     });
-
 });
-
+// рендерим начальную страницу
 server.get('/', function(req, res) {
     res.render('index.html');
 });
-
 server.listen(3000, function() {
     console.log(`http://localhost:3000`);
 });
-
 mongoClient.connect(function(err, client){
     db = client.db("db");
 });
